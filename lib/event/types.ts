@@ -18,6 +18,7 @@ export interface EventOverview {
     address?: string;
     isOnline?: boolean;
   };
+  cost?: string;
   imageUrl?: string;
   organizer?: string;
   platform: EventPlatform;

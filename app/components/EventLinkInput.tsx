@@ -28,9 +28,25 @@ export function EventLinkInput({ onAnalyze }: EventLinkInputProps) {
 
       const result: AnalysisResult = await response.json();
 
-      if (result.success) {
+      console.log("\n🔍 === BROWSER EXTRACTION LOG ===");
+      console.log("📥 API Response:", result);
+
+      if (result.success && result.event) {
+        console.log("\n✅ Extracted Event:");
+        console.table({
+          Title: result.event.title,
+          Platform: result.event.platform,
+          Cost: result.event.cost || "Not specified",
+          Location: result.event.location?.name || result.event.location?.address || "Not specified",
+          Organizer: result.event.organizer || "Not specified",
+          "Start Date": result.event.dateTime?.start || "Not specified",
+        });
+        console.log("\n📋 Full Event Object:");
+        console.log(result.event);
+        console.log("===================\n");
         onAnalyze(result);
       } else {
+        console.error("❌ Failed to extract event:", result.error);
         setError(result.error || "Failed to analyze event");
       }
     } catch (err) {
